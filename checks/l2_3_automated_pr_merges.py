@@ -28,4 +28,5 @@ def check_l2_3_automated_pr_merges(repo):
     except json.JSONDecodeError:
         return "Error parsing data"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"

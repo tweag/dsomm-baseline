@@ -32,4 +32,5 @@ def check_l2_4_mfa(repo):
     except json.JSONDecodeError:
         return "Error"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"

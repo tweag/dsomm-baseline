@@ -24,4 +24,5 @@ def check_l1_1_automated_prs(repo):
     except json.JSONDecodeError:
         return "Error"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"

@@ -13,4 +13,5 @@ def check_l2_1_artifact_pinning(repo):
             return f"Enabled ({len(pinned_artifacts)})"
         return "Not enabled"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"
