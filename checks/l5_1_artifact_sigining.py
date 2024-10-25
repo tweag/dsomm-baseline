@@ -17,4 +17,5 @@ def check_l5_1_artifact_sigining(repo):
     except json.JSONDecodeError:
         return "Error parsing data"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"
