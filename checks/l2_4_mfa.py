@@ -27,10 +27,10 @@ def check_l2_4_mfa(repo):
                 return f"Not Enabled"
         else:
             return "Unable to check"
+
     except subprocess.CalledProcessError:
         return "Unable to check"
     except json.JSONDecodeError:
-        return "Error"
+        return "Error parsing data"
     except Exception as e:
-        #return f"Error: {str(e)}"
         return "Error exception"
