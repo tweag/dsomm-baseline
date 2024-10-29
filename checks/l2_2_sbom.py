@@ -18,4 +18,5 @@ def check_l2_2_sbom(repo):
     except json.JSONDecodeError:
         return "Error"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"

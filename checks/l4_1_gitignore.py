@@ -28,4 +28,5 @@ def check_l4_1_gitignore(repo):
     except subprocess.CalledProcessError:
         return "Unable to check"
     except Exception as e:
-        return f"Error: {str(e)}"
+        #return f"Error: {str(e)}"
+        return "Error exception"
