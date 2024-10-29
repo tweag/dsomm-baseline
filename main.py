@@ -82,7 +82,7 @@ def main():
             result = all_results[repo.strip()][feature]
             row.append(result)
             level_stats[level]['total'] += 1
-            if result.lower() not in ['not detected', 'no', 'not enabled', 'unable to check', 'error parsing data', 'error exception', 'error']:
+            if result.lower() not in ['not detected', 'no', 'not available', 'not enabled', 'unable to check', 'error parsing data', 'error exception', 'error']:
                 level_stats[level]['successful'] += 1
         table_data.append(row)
 

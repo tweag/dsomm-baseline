@@ -13,10 +13,10 @@ def check_l2_2_sbom(repo):
             return f"Yes ({package_count} packages)"
         else:
             return "Not detected"
+
     except subprocess.CalledProcessError:
         return "Unable to check"
     except json.JSONDecodeError:
-        return "Error"
+        return "Error parsing data"
     except Exception as e:
-        #return f"Error: {str(e)}"
         return "Error exception"
