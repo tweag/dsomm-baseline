@@ -12,10 +12,10 @@ def check_l5_1_artifact_sigining(repo):
         if signed_artifacts:
             return f"Detected ({len(signed_artifacts)})"
         return "Not detected"
+
     except subprocess.CalledProcessError:
         return "Unable to check"
     except json.JSONDecodeError:
         return "Error parsing data"
     except Exception as e:
-        #return f"Error: {str(e)}"
         return "Error exception"
