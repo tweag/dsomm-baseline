@@ -1,13 +1,12 @@
 import importlib
-import os
 from tabulate import tabulate
 
 CHECK_LEVELS = {
-    'level1': ['l1_1_automated_prs', 'l1_2_versioning', 'l1_3_test_stored_secrets'],
-    'level2': ['l2_1_artifact_pinning', 'l2_2_sbom', 'l2_3_automated_pr_merges', 'l2_4_mfa', 'l2_5_serverside_sca', 'l2_6_test_libyear'],
-    'level3': ['l3_1_code_signing', 'l3_2_dependency_inventory', 'l3_3_version_update_approvals', 'l3_4_defect_visualization', 'l3_5_patch_management_stats', 'l3_6_treatment_of_defects_middle', 'l3_7_vulnerability_management', 'l3_8_client_side_sca', 'l3_9_sast_clientside_components', 'l3_10_sast_serverside_components'],
-    'level4': ['l4_1_gitignore', 'l4_2_advanced_defect_visualization', 'l4_3_reproducible_defects', 'l4_4_sast_self_components', 'l4_5_multiple_analyzers', 'l4_6_correlate_cve_images', 'l4_7_test_known_cves', 'l4_8_test_infra_known_cves'],
-    'level5': ['l5_1_artifact_sigining', 'l5_2_treatment_of_defects_all', 'l5_3_sast_all']
+    'LEVEL1': ['l1_1_automated_prs', 'l1_2_versioning', 'l1_3_test_stored_secrets'],
+    'LEVEL2': ['l2_1_artifact_pinning', 'l2_2_sbom', 'l2_3_automated_pr_merges', 'l2_4_mfa', 'l2_5_serverside_sca', 'l2_6_test_libyear'],
+    'LEVEL3': ['l3_1_code_signing', 'l3_2_dependency_inventory', 'l3_3_version_update_approvals', 'l3_4_defect_visualization', 'l3_5_patch_management_stats', 'l3_6_treatment_of_defects_middle', 'l3_7_vulnerability_management', 'l3_8_client_side_sca', 'l3_9_sast_clientside_components', 'l3_10_sast_serverside_components'],
+    'LEVEL4': ['l4_1_gitignore', 'l4_2_advanced_defect_visualization', 'l4_3_reproducible_defects', 'l4_4_sast_self_components', 'l4_5_multiple_analyzers', 'l4_6_correlate_cve_images', 'l4_7_test_known_cves', 'l4_8_test_infra_known_cves'],
+    'LEVEL5': ['l5_1_artifact_sigining', 'l5_2_treatment_of_defects_all', 'l5_3_sast_all']
 }
 
 AVAILABLE_CHECKS = [check for level in CHECK_LEVELS.values() for check in level]
@@ -39,7 +38,7 @@ def get_selected_checks(user_input):
         return AVAILABLE_CHECKS  # Return all checks if "ALL" is selected
 
     for item in user_input.split(','):
-        item = item.strip().lower()
+        item = item.strip().upper()
         if item in CHECK_LEVELS:
             selected_checks.extend(CHECK_LEVELS[item])
         elif item.isdigit():
@@ -58,14 +57,14 @@ def get_check_level(check):
 def main():
     print_check_menu()
     
-    user_input = input("\nEnter the levels (Level1, Level2 etc.,) or specific numbers for the checks, or type 'ALL' to run all checks: ")
+    user_input = input("\nEnter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks: ")
     selected_checks = get_selected_checks(user_input)
     
     if not selected_checks:
         print("No valid checks selected. Exiting.")
         return
 
-    repos = input("Enter the repositories to check (comma-separated, format: owner/repo): ").split(',')
+    repos = input("Enter the repositories to check (comma-separated, format: github-org/repo): ").split(',')
     
     all_results = {}
     for repo in repos:
@@ -88,7 +87,7 @@ def main():
 
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
-    print("\nLevel Score for the selected:")
+    print("\nScore for the checks in selected Level(s):")
     for level, stats in level_stats.items():
         if stats['total'] > 0:
             print(f"{level}: {stats['successful']}/{stats['total']} checks successful")
