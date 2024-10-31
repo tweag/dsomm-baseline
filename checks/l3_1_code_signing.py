@@ -1,6 +1,10 @@
 import subprocess
 import json
 
+# Required Github permissions: "Contents" repository permissions (read)
+# Rule: L3.1 (Code Signing): Check if the last commit is signed
+# Ideas: Check if the main branch has required_signatures enabled (Prevent merging unsigned commits)
+#        Check if the last x commits are signed (Ensure that signed commits are being used in the past)
 def check_l3_1_code_signing(repo):
     try:
         result = subprocess.run(
@@ -8,12 +12,10 @@ def check_l3_1_code_signing(repo):
             capture_output=True, text=True, check=True
         )
         commits = json.loads(result.stdout)
-        if commits and 'verification' in commits[0]:
-            if commits[0]['verification']['verified']:
-                return "Enabled"
-            else:
-                return "Not detected"
-        return "Not detected"
+        if commits[0]['commit']['verification']['verified']:
+            return "Enabled" 
+        else:
+            return "Not detected"
     except subprocess.CalledProcessError:
         return "Unable to check"
     except json.JSONDecodeError:
