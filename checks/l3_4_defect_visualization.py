@@ -2,11 +2,11 @@ import subprocess
 import json
 
 # Required Github permissions: "Administration" repository permissions (read)
-# L3.3 (Defect visualization) NOTE: on others checks this is considered a L2
+# L3.4 (Defect visualization) NOTE: on others checks this is considered a L2
 # Description: Vulnerabilities are simple visualized.
 # Rule: Check if the repository has vulnerability alerts enabled
 # Ideas: Check if dependabot is enabled
-def check_l3_3_defect_visualization(repo):
+def check_l3_4_defect_visualization(repo):
     try:
         result = subprocess.run(
             ['gh', 'api', f'/repos/{repo}/vulnerability-alerts'],
