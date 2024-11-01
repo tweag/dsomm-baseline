@@ -27,7 +27,7 @@ This project provides a modular framework to check various OWASP DSOMM features 
 | [version_update_approvals](./checks/l3_3_version_update_approvals.py) | Look for reviewers by examining whether there are any reviewers in the latest PR |
 | [defect_visualization](./checks/l3_4_defect_visualization.py) | Check if the repository has vulnerability alerts enabled |
 | [patch_management_stats](./checks/l3_5_patch_management_stats.py) | TBD |
-| [treatment_of_defects_middle](./checks/l3_6_treatment_of_defects_middle.py) | TBD |
+| [treatment_of_defects_middle](./checks/l3_6_treatment_of_defects_middle.py) | Look for a rule that protect the main branch to have vulnerabilities with severity middle |
 | [vulnerability_management](./checks/l3_7_vulnerability_management.py) | TBD |
 | [client_side_sca](./checks/l3_8_client_side_sca.py) | TBD |
 | [sast_clientside_components](./checks/l3_9_sast_clientside_components.py) | TBD |
