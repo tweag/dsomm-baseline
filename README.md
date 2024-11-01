@@ -25,7 +25,7 @@ This project provides a modular framework to check various OWASP DSOMM features 
 | [code_signing](./checks/l3_1_code_signing.py) | Look for code signing by examining the verification status of the latest commit  |
 | [dependency_inventory](./checks/l3_2_dependency_inventory.py) | TBD |
 | [version_update_approvals](./checks/l3_3_version_update_approvals.py) | Look for reviewers by examining whether there are any reviewers in the latest PR |
-| [defect_visualization](./checks/l3_4_defect_visualization.py) | TBD |
+| [defect_visualization](./checks/l3_4_defect_visualization.py) | Check if the repository has vulnerability alerts enabled |
 | [patch_management_stats](./checks/l3_5_patch_management_stats.py) | TBD |
 | [treatment_of_defects_middle](./checks/l3_6_treatment_of_defects_middle.py) | TBD |
 | [vulnerability_management](./checks/l3_7_vulnerability_management.py) | TBD |
