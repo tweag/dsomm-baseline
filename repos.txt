@@ -1,0 +1,6 @@
+Perdiga/devops_challange
+Perdiga/node-localstack-devcontainer
+devsecopsmaturitymodel/DevSecOps-MaturityModel
+ModusCreate-NFR/devsecops-maturity-model-baseline
+chromium/chromium
+home-assistant/core
