@@ -2,7 +2,9 @@ import subprocess
 import json
 
 # Required Github permissions: "Contents" repository permissions (read)
-# Rule: L3.1 (Code Signing): Check if the last commit is signed
+# L3.1 (Code Signing)
+# Description: Digitally signing commits helps to prevent unauthorized manipulation of source code.
+# Rule:  Check if the last commit is signed
 # Ideas: Check if the main branch has required_signatures enabled (Prevent merging unsigned commits)
 #        Check if the last x commits are signed (Ensure that signed commits are being used in the past)
 def check_l3_1_code_signing(repo):
@@ -16,6 +18,7 @@ def check_l3_1_code_signing(repo):
             return "Enabled" 
         else:
             return "Not detected"
+            
     except subprocess.CalledProcessError:
         return "Unable to check"
     except json.JSONDecodeError:
