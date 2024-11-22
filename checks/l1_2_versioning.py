@@ -1,11 +1,17 @@
 import subprocess
 import json
 
+# Required Github permissions: "Contents" repository permissions (read)
+# Rule: L1.2 (Versioning): Check if the repository uses versioning
+# Ideas: Check for common version files, tags, and releases
+#        Could be extended to check for version patterns in commit messages or branch names
+
 def check_l1_2_versioning(repo):
     try:
-        # Check for version files
+        # Check for common version files
         version_files = ['VERSION', 'version.txt', 'package.json', 'setup.py', 'pom.xml']
         for file in version_files:
+            # Use GitHub CLI to check if each version file exists
             result = subprocess.run(
                 ['gh', 'api', f'/repos/{repo}/contents/{file}'],
                 capture_output=True, text=True
