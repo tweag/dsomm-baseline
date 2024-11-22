@@ -1,6 +1,11 @@
 import subprocess
 import json
 
+# Required Github permissions: "Secret scanning alerts" repository permissions (read)
+# Rule: L1.3 (Test for stored secrets): Check if secret scanning is enabled and for any alerts
+# Ideas: Check if secret scanning is enabled for the repository
+#        Could be extended to check for specific types of secrets or the number of open alerts
+
 def check_l1_3_test_stored_secrets(repo):
     try:
         # Check for secret scanning alerts if enabled
@@ -9,12 +14,14 @@ def check_l1_3_test_stored_secrets(repo):
             capture_output=True, text=True
         )
 
-        # Check secret scanning is enabled
+        # Check if secret scanning is enabled
         security_result = subprocess.run(
             ['gh', 'api', f'/repos/{repo}'],
             capture_output=True, text=True
         )
+
         if alerts_result.returncode == 0 and security_result.returncode == 0:
+            # Parse the repository data JSON
             repo_data = json.loads(security_result.stdout)
             security_and_analysis = repo_data.get('security_and_analysis', {})
             secret_scanning = security_and_analysis.get('secret_scanning', {})
