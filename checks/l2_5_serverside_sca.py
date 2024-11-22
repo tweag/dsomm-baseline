@@ -1,6 +1,11 @@
 import subprocess
 import json
 
+# Required Github permissions: "Contents" and "Actions" repository permissions (read)
+# Rule: L2.5 (Software Composition Analysis - server side): Check for server-side SCA implementation
+# Ideas: Check for SCA configuration files and GitHub Actions workflows related to SCA
+#        Could be extended to check for specific SCA tool integrations or scan results
+
 def check_l2_5_serverside_sca(repo):
     try:
         sca_indicators = []
@@ -12,6 +17,7 @@ def check_l2_5_serverside_sca(repo):
             '.snyk',                 # Snyk
         ]
 
+        # Use GitHub CLI to check for the existence of each SCA config file
         for file in sca_files:
             result = subprocess.run(
                 ['gh', 'api', f'/repos/{repo}/contents/{file}'],
@@ -27,10 +33,12 @@ def check_l2_5_serverside_sca(repo):
         )
 
         if actions_result.returncode == 0:
+            # Parse the JSON output of workflows
             workflows = json.loads(actions_result.stdout)
-            # Add more keywords as needed
+            # Define keywords that might indicate SCA-related workflows
             sca_keywords = ['dependency', 'sca', 'composition', 'snyk']
             for workflow in workflows['workflows']:
+                # Check if any SCA keyword is in the workflow name
                 if any(keyword in workflow['name'].lower() for keyword in sca_keywords):
                     sca_indicators.append(f"GitHub Action: {workflow['name']}")
 
