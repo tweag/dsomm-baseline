@@ -13,9 +13,9 @@ def check_l3_4_defect_visualization(repo):
             capture_output=True, text=True, check=True
         )
         if result.returncode == 0:
-            print(f"Vulnerability alerts are enabled for the repository.")
+            return f"Vulnerability alerts are enabled for the repository."
         else:
-            print(f"Vulnerability alerts are not enabled for the repository.")
+            return f"Not Enabled"
           
     except subprocess.CalledProcessError as e:
         return "Unable to check"
