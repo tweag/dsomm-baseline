@@ -9,7 +9,7 @@ import json
 # Ideas: Check if the main branch has prtection rule that allow only to be merged with at least 1 approval (Prevent merging unsigned commits)
 #        Check if the last x prs are has reviewer (Ensure that two eyes principle are being used in the past)
 #        Some PRs are automated so it will not have a review for example the PRs that are created by dependabot 
-def check_l3_1_version_update_approvals(repo):
+def check_l3_3_version_update_approvals(repo):
     try:
         result = subprocess.run(
             ['gh', 'api', f'/repos/{repo}/pulls'],
@@ -30,7 +30,4 @@ def check_l3_1_version_update_approvals(repo):
     except json.JSONDecodeError:
         return "Error"
     except Exception as e:
-        #return f"Error: {str(e)}"
         return "Error exception"
-    
-print(check_l3_1_version_update_approvals('home-assistant/core'))

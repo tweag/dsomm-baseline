@@ -6,7 +6,7 @@ import json
 # Description: Vulnerabilities with severity middle are added to the quality gate.
 # Rule: Vulnerabilities with severity middle are added to the quality gate.
 # Ideas: Check if dependabot alerts for medium vulnerabilities are added to the quality gate
-def check_l3_4_defect_visualization(repo):
+def check_l3_6_treatment_of_defects_middle(repo):
     try:
         vulnerability_check_keyword = "medium-vulnerability"
         branch = "main"
@@ -31,6 +31,5 @@ def check_l3_4_defect_visualization(repo):
     except json.JSONDecodeError:
         return "Error"
     except Exception as e:
-        #return f"Error: {str(e)}"
         return "Error exception"
     
