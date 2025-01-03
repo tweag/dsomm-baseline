@@ -80,7 +80,7 @@ This project provides a modular framework to check various OWASP DSOMM features 
    ```bash
    python main.py
    ```
-It will be prompted with set of DCOMM Levels and Checks to choose to run for a given repo(s)
+It will be prompted with set of DSOMM Levels and Checks to choose to run for a given repo(s)
 1. **Select checks**:
 
    You will be presented with a list of available checks grouped as per owasp dsomm levels.
