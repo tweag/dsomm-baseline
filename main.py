@@ -1,5 +1,8 @@
 import importlib
+import csv
 from tabulate import tabulate
+import sys
+import os
 
 CHECK_LEVELS = {
     'LEVEL1': ['l1_1_automated_prs', 'l1_2_versioning', 'l1_3_test_stored_secrets'],
@@ -54,22 +57,7 @@ def get_check_level(check):
             return level
     return "Unknown"
 
-def main():
-    print_check_menu()
-    
-    user_input = input("\nEnter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks: ")
-    selected_checks = get_selected_checks(user_input)
-    
-    if not selected_checks:
-        print("No valid checks selected. Exiting.")
-        return
-
-    repos = input("Enter the repositories to check (comma-separated, format: github-org/repo): ").split(',')
-    
-    all_results = {}
-    for repo in repos:
-        all_results[repo.strip()] = check_repo_security_features(repo.strip(), selected_checks)
-
+def output_results(all_results, repos, selected_checks, output_format):
     headers = ["Security Feature"] + repos
     table_data = []
     level_stats = {level: {'total': 0, 'successful': 0} for level in CHECK_LEVELS}
@@ -85,12 +73,41 @@ def main():
                 level_stats[level]['successful'] += 1
         table_data.append(row)
 
-    print(tabulate(table_data, headers=headers, tablefmt="grid"))
+    if output_format.lower() == 'csv':
+        csv_filename = 'dsomm.csv'
+        with open(csv_filename, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(headers)
+            writer.writerows(table_data)
+        print(f"Results have been saved to {csv_filename}")
+    else:  # Default to tabular format
+        print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
     print("\nScore for the checks in selected Level(s):")
     for level, stats in level_stats.items():
         if stats['total'] > 0:
             print(f"{level}: {stats['successful']}/{stats['total']} checks successful")
 
+def main():
+    print_check_menu()
+    
+    user_input = input("\nEnter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks: ")
+    selected_checks = get_selected_checks(user_input)
+    
+    if not selected_checks:
+        print("No valid checks selected. Exiting.")
+        return
+
+    repos = input("Enter the repositories to check (comma-separated, format: github-org/repo): ").split(',')
+    
+    output_format = input("Enter output format (tabular/csv, default is tabular): ").strip() or 'tabular'
+    
+    all_results = {}
+    for repo in repos:
+        all_results[repo.strip()] = check_repo_security_features(repo.strip(), selected_checks)
+
+    output_results(all_results, repos, selected_checks, output_format)
+
 if __name__ == "__main__":
     main()
+
