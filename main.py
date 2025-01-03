@@ -1,7 +1,6 @@
 import importlib
 import csv
 from tabulate import tabulate
-import sys
 import os
 
 CHECK_LEVELS = {
@@ -60,7 +59,8 @@ def get_check_level(check):
 def output_results(all_results, repos, selected_checks, output_format):
     headers = ["Security Feature"] + repos
     table_data = []
-    level_stats = {level: {'total': 0, 'successful': 0} for level in CHECK_LEVELS}
+    level_stats = {level: {repo: {'total': 0, 'successful': 0} for repo in repos} for level in CHECK_LEVELS}
+    total_stats = {repo: {'total': 0, 'successful': 0} for repo in repos}
 
     for feature in selected_checks:
         level = get_check_level(feature)
@@ -68,10 +68,34 @@ def output_results(all_results, repos, selected_checks, output_format):
         for repo in repos:
             result = all_results[repo.strip()][feature]
             row.append(result)
-            level_stats[level]['total'] += 1
+            level_stats[level][repo]['total'] += 1
+            total_stats[repo]['total'] += 1
             if result.lower() not in ['not detected', 'no', 'not available', 'not enabled', 'unable to check', 'error parsing data', 'error exception', 'error']:
-                level_stats[level]['successful'] += 1
+                level_stats[level][repo]['successful'] += 1
+                total_stats[repo]['successful'] += 1
         table_data.append(row)
+
+    # Add level score rows
+    for level, repo_stats in level_stats.items():
+        if any(stats['total'] > 0 for stats in repo_stats.values()):
+            score_row = [f"{level} Score"]
+            for repo in repos:
+                stats = repo_stats[repo]
+                if stats['total'] > 0:
+                    score_row.append(f"{stats['successful']}/{stats['total']}")
+                else:
+                    score_row.append("")
+            table_data.append(score_row)
+
+    # Add Total Score row
+    total_score_row = ["Total Score"]
+    for repo in repos:
+        stats = total_stats[repo]
+        if stats['total'] > 0:
+            total_score_row.append(f"{stats['successful']}/{stats['total']}")
+        else:
+            total_score_row.append("")
+    table_data.append(total_score_row)
 
     if output_format.lower() == 'csv':
         csv_filename = 'dsomm.csv'
@@ -82,11 +106,6 @@ def output_results(all_results, repos, selected_checks, output_format):
         print(f"Results have been saved to {csv_filename}")
     else:  # Default to tabular format
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
-
-    print("\nScore for the checks in selected Level(s):")
-    for level, stats in level_stats.items():
-        if stats['total'] > 0:
-            print(f"{level}: {stats['successful']}/{stats['total']} checks successful")
 
 def main():
     print_check_menu()
