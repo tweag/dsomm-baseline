@@ -131,7 +131,7 @@ It will be prompted with set of DSOMM Levels and Checks to choose to run for a g
 
 3. **Choose the output format (tabular or csv)**:
    For tabular output, results will be displayed in the console.
-   For CSV output, results will be saved in 'dsomm.csv' in the current directory.
+   For CSV output, specify custom file path and name to save the results.
    
    The script will output has the results of each selected check for each repository and
    Score summery for the checks in selected Level(s).

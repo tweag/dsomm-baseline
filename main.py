@@ -56,7 +56,7 @@ def get_check_level(check):
             return level
     return "Unknown"
 
-def output_results(all_results, repos, selected_checks, output_format):
+def output_results(all_results, repos, selected_checks, output_format, output_path=None):
     headers = ["Security Feature"] + repos
     table_data = []
     level_stats = {level: {repo: {'total': 0, 'successful': 0} for repo in repos} for level in CHECK_LEVELS}
@@ -98,7 +98,12 @@ def output_results(all_results, repos, selected_checks, output_format):
     table_data.append(total_score_row)
 
     if output_format.lower() == 'csv':
-        csv_filename = 'dsomm.csv'
+        if output_path:
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            csv_filename = output_path
+        else:
+            csv_filename = 'dsomm.csv'
+        
         with open(csv_filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(headers)
@@ -121,11 +126,15 @@ def main():
     
     output_format = input("Enter output format (tabular/csv, default is tabular): ").strip() or 'tabular'
     
+    output_path = None
+    if output_format.lower() == 'csv':
+        output_path = input("Enter the path and filename for the CSV file (e.g., /path/to/output.csv): ").strip()
+    
     all_results = {}
     for repo in repos:
         all_results[repo.strip()] = check_repo_security_features(repo.strip(), selected_checks)
 
-    output_results(all_results, repos, selected_checks, output_format)
+    output_results(all_results, repos, selected_checks, output_format, output_path)
 
 if __name__ == "__main__":
     main()
