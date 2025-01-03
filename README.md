@@ -94,14 +94,22 @@ Key features of this baseline framework:
    dsomm-venv\Scripts\activate
    ```
 4. **Install the required dependencies**:
-
-   Make sure you have Python 3 installed, then run:
    ```bash
    pip install -r requirements.txt
    ```
 5. **Install and authenticate GitHub CLI**:
 
    Follow the instructions at [GitHub CLI](https://cli.github.com/) to install and authenticate.
+   
+   For authentication run the following command and follow the prompts:
+   ```bash
+   gh auth login
+   ```
+   You'll be asked to choose:
+   * The account to log into (GitHub.com or GitHub Enterprise)
+   * Your preferred protocol for Git operations (HTTPS or SSH)
+   * Whether to authenticate Git with your GitHub credentials
+   * How to authenticate (web browser or authentication token)
 
 ## Usage
 **Run the main script**:
