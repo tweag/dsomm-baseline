@@ -1,6 +1,22 @@
 # OWASP DevSecOps Maturity Model (DSOMM) Baseline Using GitHub API
 
-This project provides a modular framework to check various OWASP DSOMM features on a specified GitHub repository using gh cli. The checks are organised as per [owasp dsomm](https://dsomm.owasp.org/) guidance and possible automated checks using github api.
+This project performs security checks on GitHub repositories using the [OWASP DevSecOps Maturity Model (DSOMM)](https://owasp.org/www-project-devsecops-maturity-model) framework on a specified GitHub repository using gh cli. The checks are organised as per [owasp dsomm](https://dsomm.owasp.org/) guidance and possible automated checks using github api.
+
+The [OWASP DevSecOps Maturity Model (DSOMM)](https://owasp.org/www-project-devsecops-maturity-model) is a comprehensive framework designed to help organizations evaluate and improve their DevSecOps practices. It provides a structured approach to integrating security into the software development lifecycle, offering a roadmap for advancing DevSecOps capabilities.
+
+**Key features of DSOMM include:**
+* Five main dimensions: Build and Deployment, Implementation, Culture and Organization, Information Gathering and Test and Verification.
+* Five maturity levels for each dimension, allowing organizations to assess and improve their security practices incrementally.
+* A flexible, iterative approach that aligns well with agile development practices.
+
+![Implementation Levels](./utils/dsomm-implementation.png)
+
+### Features
+Key features of this baseline framework:
+* Supports multiple security check levels (LEVEL1 to LEVEL5) aligned with DSOMM maturity levels.
+* Allows checking multiple repositories simultaneously.
+* Provides flexible tabular format and CSV output options.
+* Calculates and displays scores for selected check levels, help to track progress in DSOMM implementation.
 
 ### Level 1: Basic understanding of security practices
 | DSOMM Baseline | Description  | 
@@ -63,13 +79,27 @@ This project provides a modular framework to check various OWASP DSOMM features 
    git clone https://github.com/ModusCreate-NFR/devsecops-maturity-model-baseline.git
    cd devsecops-maturity-model-baseline
    ```
-2. **Install the required dependencies**:
+2. **Create and activate python virtual environment**:
+   ```bash
+   python3 -m venv dsomm-venv
+   ```
+   
+   #### For Unix or MacOS:
+   ```bash
+   source dsomm-venv/bin/activate
+   ```
+   
+   #### For Windows:
+   ```bash
+   dsomm-venv\Scripts\activate
+   ```
+4. **Install the required dependencies**:
 
    Make sure you have Python 3 installed, then run:
    ```bash
    pip install -r requirements.txt
    ```
-3. **Install and authenticate GitHub CLI**:
+5. **Install and authenticate GitHub CLI**:
 
    Follow the instructions at [GitHub CLI](https://cli.github.com/) to install and authenticate.
 
@@ -80,7 +110,7 @@ This project provides a modular framework to check various OWASP DSOMM features 
    ```bash
    python main.py
    ```
-It will be prompted with set of DCOMM Levels and Checks to choose to run for a given repo(s)
+It will be prompted with set of DSOMM Levels and Checks to choose to run for a given repo(s)
 1. **Select checks**:
 
    You will be presented with a list of available checks grouped as per owasp dsomm levels.
@@ -91,10 +121,12 @@ It will be prompted with set of DCOMM Levels and Checks to choose to run for a g
 
    Provide a comma-separated list of repositories in the format github-org/repo (e.g., Modus/testrepo).
 
-3. **View results**:
-
-   The script will output a table showing the results of each selected check for each repository and
-   Summerize the score for the checks in selected Level(s).
+3. **Choose the output format (tabular or csv)**:
+   For tabular output, results will be displayed in the console.
+   For CSV output, results will be saved in 'dsomm.csv' in the current directory.
+   
+   The script will output has the results of each selected check for each repository and
+   Score summery for the checks in selected Level(s).
 
    OWASP DSOMM Level statistics will be displayed, indicating the number of successful checks per group.
 
@@ -146,6 +178,9 @@ LEVEL5:
 
 Enter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks: all
 Enter the repositories to check (comma-separated, format: github-org/repo): ModusCreate/test-repo
+Enter output format (tabular/csv, default is tabular): 
+
+Score for the checks in selected Level(s):
 +------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Security Feature                   | ModusCreate/test-repo                                                                                                                          |
 +====================================+==================================================================================================================================================================+
@@ -217,3 +252,4 @@ LEVEL3: 7/10 checks successful
 LEVEL4: 3/8 checks successful
 LEVEL5: 1/3 checks successful
 ```
+
