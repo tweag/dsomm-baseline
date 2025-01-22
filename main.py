@@ -154,7 +154,7 @@ def main():
     if output_format.lower() == 'csv':
         output_path = input("Enter the path and filename for the CSV file (e.g., /path/to/output.csv): ").strip()
     
-    show_all_output = input("Show all checks in output (including Not Supported)?, default is Y (Y/n): ").strip().lower() != 'n'
+    show_all_output = input("Show "Not Supported" checks in output? Default is Y (Y, n): ").strip().lower() != 'n'
     
     all_results = {}
     for repo in repos:
