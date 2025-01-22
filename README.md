@@ -363,7 +363,7 @@ Enter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' 
 Enter the repositories to check (comma-separated, format: github-org/repo): ModusCreate/test-repo
 Enter output format (tabular/csv, default is tabular): csv
 Enter the path and filename for the CSV file (e.g., /path/to/output.csv): ./dsomm-test-repo.csv
-Show all checks in output (including Not Supported)?, default is Y (Y/n):
+Show "Not Supported" checks in output? Default is Y (Y, n):
 Results have been saved to ./dsomm-test-repo.csv
 ```
 </details>
@@ -420,7 +420,7 @@ LEVEL5:
 Enter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks: all
 Enter the repositories to check (comma-separated, format: github-org/repo): ModusCreate/test-repo
 Enter output format (tabular/csv, default is tabular):
-Show all checks in output (including Not Supported)?, default is Y (Y/n):
+Show "Not Supported" checks in output? Default is Y (Y, n):
 +---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Security Feature                                                          | ModusCreate/test-repo                                                                                                                                            |
 +===========================================================================+==================================================================================================================================================================+
