@@ -83,6 +83,8 @@ def output_results(all_results, repos, selected_checks, output_format, output_pa
     total_stats = {repo: {'total': 0, 'successful': 0} for repo in repos}
 
     for feature in selected_checks:
+        if not show_all and not any(check['name'] == feature and check.get('supported', False) for checks in CHECK_LEVELS.values() for check in checks):
+            continue # skip unsupported checks when show_all false
         level = get_check_level(feature)
         row = [feature]
         for repo in repos:
