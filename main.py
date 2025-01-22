@@ -1,62 +1,82 @@
+import yaml
 import importlib
 import csv
 from tabulate import tabulate
 import os
 
-CHECK_LEVELS = {
-    'LEVEL1': ['l1_1_automated_prs', 'l1_2_versioning', 'l1_3_test_stored_secrets'],
-    'LEVEL2': ['l2_1_artifact_pinning', 'l2_2_sbom', 'l2_3_automated_pr_merges', 'l2_4_mfa', 'l2_5_serverside_sca', 'l2_6_test_libyear'],
-    'LEVEL3': ['l3_1_code_signing', 'l3_2_dependency_inventory', 'l3_3_version_update_approvals', 'l3_4_defect_visualization', 'l3_5_patch_management_stats', 'l3_6_treatment_of_defects_middle', 'l3_7_vulnerability_management', 'l3_8_client_side_sca', 'l3_9_sast_clientside_components', 'l3_10_sast_serverside_components'],
-    'LEVEL4': ['l4_1_gitignore', 'l4_2_advanced_defect_visualization', 'l4_3_reproducible_defects', 'l4_4_sast_self_components', 'l4_5_multiple_analyzers', 'l4_6_correlate_cve_images', 'l4_7_test_known_cves', 'l4_8_test_infra_known_cves'],
-    'LEVEL5': ['l5_1_artifact_sigining', 'l5_2_treatment_of_defects_all', 'l5_3_sast_all']
-}
+def load_check_levels(yaml_file):
+    with open(yaml_file, 'r') as f:
+        return yaml.safe_load(f)
 
-AVAILABLE_CHECKS = [check for level in CHECK_LEVELS.values() for check in level]
+CHECK_LEVELS = load_check_levels('dsomm_checks.yaml')
+
+AVAILABLE_CHECKS = [check['name'] for level in CHECK_LEVELS.values() for check in level if check.get('supported', False)]
 
 def load_check(check_name):
-    module = importlib.import_module(f'checks.{check_name}')
-    return getattr(module, f'check_{check_name}')
+    for level_checks in CHECK_LEVELS.values():
+        for check in level_checks:
+            if check['name'] == check_name and check.get('supported', False):
+                module_name = check.get('module')
+                if not module_name:
+                    raise ValueError(f"Module name not found for supported check '{check_name}' in checks directory.")
+                try:
+                    module = importlib.import_module(f'checks.{module_name}')
+                    check_function = getattr(module, f'check_{module_name}')
+                    return check_function
+                except ImportError:
+                    raise ImportError(f"Error: Module 'checks.{module_name}' not found. Please ensure the file 'checks/{module_name}.py' exists.")
+                except AttributeError:
+                    raise AttributeError(f"Error: Function 'check_{module_name}' not found in module 'checks.{module_name}'. Please ensure the function is defined correctly.")
+    raise ValueError(f"Not Supported - Manual Process")
 
 def check_repo_security_features(repo, selected_checks):
     results = {}
     for check in selected_checks:
-        check_function = load_check(check)
-        results[check] = check_function(repo)
+        try:
+            check_function = load_check(check)
+            results[check] = check_function(repo)
+        except (ImportError, AttributeError, ValueError) as e:
+            results[check] = str(e)
     return results
 
-def print_check_menu():
+def print_check_menu(show_all=False):
     print("Available checks:")
     check_number = 1
     for level, checks in CHECK_LEVELS.items():
         print(f"\n{level}:")
         for check in checks:
-            print(f"  {check_number}. {check}")
-            check_number += 1
+            supported = check.get('supported', False)
+            if show_all or supported:
+                print(f"  {check_number}. {check['name']} {'(Supported)' if supported else '(Not Supported)'}")
+                check_number += 1
 
-def get_selected_checks(user_input):
+def get_selected_checks(user_input, show_all=False):
     selected_checks = []
     
     if user_input.strip().upper() == "ALL":
-        return AVAILABLE_CHECKS  # Return all checks if "ALL" is selected
+        return [check['name'] for level in CHECK_LEVELS.values() for check in level]
+
+    all_checks = [check['name'] for level in CHECK_LEVELS.values() for check in level]
+    displayed_checks = all_checks if show_all else AVAILABLE_CHECKS
 
     for item in user_input.split(','):
         item = item.strip().upper()
         if item in CHECK_LEVELS:
-            selected_checks.extend(CHECK_LEVELS[item])
+            selected_checks.extend([check['name'] for check in CHECK_LEVELS[item]])
         elif item.isdigit():
             index = int(item) - 1
-            if 0 <= index < len(AVAILABLE_CHECKS):
-                selected_checks.append(AVAILABLE_CHECKS[index])
+            if 0 <= index < len(displayed_checks):
+                selected_checks.append(displayed_checks[index])
     
-    return list(set(selected_checks))  # Remove duplicates
+    return list(set(selected_checks))
 
 def get_check_level(check):
     for level, checks in CHECK_LEVELS.items():
-        if check in checks:
+        if any(c['name'] == check for c in checks):
             return level
     return "Unknown"
 
-def output_results(all_results, repos, selected_checks, output_format, output_path=None):
+def output_results(all_results, repos, selected_checks, output_format, output_path=None, show_all=True):
     headers = ["Security Feature"] + repos
     table_data = []
     level_stats = {level: {repo: {'total': 0, 'successful': 0} for repo in repos} for level in CHECK_LEVELS}
@@ -68,11 +88,12 @@ def output_results(all_results, repos, selected_checks, output_format, output_pa
         for repo in repos:
             result = all_results[repo.strip()][feature]
             row.append(result)
-            level_stats[level][repo]['total'] += 1
-            total_stats[repo]['total'] += 1
-            if result.lower() not in ['not detected', 'no', 'not available', 'not enabled', 'unable to check', 'error parsing data', 'error exception', 'error']:
-                level_stats[level][repo]['successful'] += 1
-                total_stats[repo]['successful'] += 1
+            if any(check['name'] == feature and check.get('supported', False) for checks in CHECK_LEVELS.values() for check in checks):
+                level_stats[level][repo]['total'] += 1
+                total_stats[repo]['total'] += 1
+                if result.lower() not in ['not detected', 'no', 'not available', 'not enabled', 'unable to check', 'error parsing data', 'error exception', 'error']:
+                    level_stats[level][repo]['successful'] += 1
+                    total_stats[repo]['successful'] += 1
         table_data.append(row)
 
     # Add level score rows
@@ -113,10 +134,11 @@ def output_results(all_results, repos, selected_checks, output_format, output_pa
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
 def main():
-    print_check_menu()
+    show_all_menu = input("Show all checks in menu (including not supported)?, default is N (y/N): ").strip().lower() == 'y'
+    print_check_menu(show_all_menu)
     
     user_input = input("\nEnter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks: ")
-    selected_checks = get_selected_checks(user_input)
+    selected_checks = get_selected_checks(user_input, show_all_menu)
     
     if not selected_checks:
         print("No valid checks selected. Exiting.")
@@ -130,12 +152,13 @@ def main():
     if output_format.lower() == 'csv':
         output_path = input("Enter the path and filename for the CSV file (e.g., /path/to/output.csv): ").strip()
     
+    show_all_output = input("Show all checks in output (including Not Supported)?, default is Y (Y/n): ").strip().lower() != 'n'
+    
     all_results = {}
     for repo in repos:
         all_results[repo.strip()] = check_repo_security_features(repo.strip(), selected_checks)
 
-    output_results(all_results, repos, selected_checks, output_format, output_path)
+    output_results(all_results, repos, selected_checks, output_format, output_path, show_all_output)
 
 if __name__ == "__main__":
     main()
-

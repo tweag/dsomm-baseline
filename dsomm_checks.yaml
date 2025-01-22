@@ -1,0 +1,381 @@
+### The listed checks are gathered from https://dsomm.owasp.org/
+---
+LEVEL1:
+  - name: Defined build process
+    supported: false
+  - name: Defined deployment process
+    supported: false
+  - name: A patch policy is defined
+    supported: false
+  - name: Automated PRs for patches
+    supported: true
+    module: l1_1_automated_prs
+  - name: Conduction of simple threat modeling on technical level
+    supported: false
+  - name: Ad-Hoc Security trainings for software developers
+    supported: false
+  - name: Security consulting on request
+    supported: false
+  - name: Definition of simple BCDR practices for critical components
+    supported: false
+  - name: App. Hardening Level 1 (50%)
+    supported: false
+  - name: Contextualized Encoding
+    supported: false
+  - name: Versioning
+    supported: true
+    module: l1_2_versioning
+  - name: MFA for admins
+    supported: false
+  - name: Simple access control for systems
+    supported: false
+  - name: Usage of edge encryption at transit
+    supported: false
+  - name: Centralized system logging
+    supported: false
+  - name: Simple application metrics
+    supported: false
+  - name: Simple budget metrics
+    supported: false
+  - name: Simple system metrics
+    supported: false
+  - name: Simple false positive treatment
+    supported: false
+  - name: Test for stored secrets
+    supported: true
+    module: l1_3_test_stored_secrets
+  - name: Default settings for intensity
+    supported: false
+  - name: High test intensity
+    supported: false
+LEVEL2:
+  - name: Building and testing of artifacts in virtual environments
+    supported: false
+  - name: Pinning of artifacts
+    supported: true
+    module: l2_1_artifact_pinning
+  - name: SBOM of components
+    supported: true
+    module: l2_2_sbom
+  - name: Defined decommissioning process
+    supported: false
+  - name: Environment depending configuration parameters (secrets)
+    supported: false
+  - name: Evaluation of the trust of used components
+    supported: false
+  - name: Automated merge of automated PRs
+    supported: true
+    module: l2_3_automated_pr_merges
+  - name: Nightly build of images (base images)
+    supported: false
+  - name: Reduction of the attack surface
+    supported: false
+  - name: Usage of a maximum lifetime for images
+    supported: false
+  - name: Information security targets are communicated
+    supported: false
+  - name: Each team has a security champion
+    supported: false
+  - name: Regular security training for all
+    supported: false
+  - name: Regular security training of security champions
+    supported: false
+  - name: Reward of good communication
+    supported: false
+  - name: Security code review
+    supported: false
+  - name: App. Hardening Level 1
+    supported: false
+  - name: Source Control Protection
+    supported: false
+  - name: Applications are running in virtualized environments
+    supported: false
+  - name: Backup
+    supported: false
+  - name: Baseline Hardening of the environment
+    supported: false
+  - name: Isolated networks for virtual environments
+    supported: false
+  - name: MFA
+    supported: true
+    module: l2_4_mfa
+  - name: Usage of an security account
+    supported: false
+  - name: Usage of encryption at rest
+    supported: false
+  - name: Usage of test and production environments
+    supported: false
+  - name: Virtual environments are limited
+    supported: false
+  - name: Logging of security events
+    supported: false
+  - name: Visualized logging
+    supported: false
+  - name: Alerting
+    supported: false
+  - name: Monitoring of costs
+    supported: false
+  - name: Visualized metrics
+    supported: false
+  - name: Security unit tests for important components
+    supported: false
+  - name: Treatment of defects with severity high or higher
+    supported: false
+  - name: Coverage of client side dynamic components
+    supported: false
+  - name: Simple Scan
+    supported: false
+  - name: Usage of different roles
+    supported: false
+  - name: Test for exposed services
+    supported: false
+  - name: Test network segmentation
+    supported: false
+  - name: Test of the configuration of cloud environments
+    supported: false
+  - name: API design validation
+    supported: false
+  - name: Software Composition Analysis (server side)
+    supported: true
+    module: l2_5_serverside_sca
+  - name: Test for Time to Patch
+    supported: false
+  - name: Test libyear
+    supported: true
+    module: l2_6_test_libyear
+  - name: Test cluster deployment resources
+    supported: false
+  - name: Test for image lifetime
+    supported: false
+  - name: Test of virtualized environments
+    supported: false
+  - name: Test the cloud configuration
+    supported: false
+  - name: Test the definition of virtualized environments
+    supported: false
+  - name: Regular tests
+    supported: false
+LEVEL3:
+  - name: Signing of code
+    supported: true
+    module: l3_1_code_signing
+  - name: Handover of confidential parameters
+    supported: false
+  - name: Inventory of dependencies
+    supported: false
+  - name: Inventory of running artifacts
+    supported: true
+    module: l3_2_dependency_inventory
+  - name: Rolling update on deployment
+    supported: false
+  - name: Conduction of simple threat modeling on business level
+    supported: false
+  - name: Creation of simple abuse stories
+    supported: false
+  - name: Creation of threat modeling processes and standards
+    supported: false
+  - name: 'Conduction of build-it, break-it, fix-it contests'
+    supported: false
+  - name: Security Coaching
+    supported: false
+  - name: Security-Lessoned-Learned
+    supported: false
+  - name: Simple mob hacking
+    supported: false
+  - name: Approval by reviewing any new version
+    supported: true
+    module: l3_3_version_update_approvals
+  - name: Definition of a change management process
+    supported: false
+  - name: App. Hardening Level 2 (75%)
+    supported: false
+  - name: API design validation
+    supported: false
+  - name: Filter outgoing traffic
+    supported: false
+  - name: Immutable infrastructure
+    supported: false
+  - name: Infrastructure as Code
+    supported: false
+  - name: Limitation of system events
+    supported: false
+  - name: Role based authentication and authorization
+    supported: false
+  - name: Usage of internal encryption at transit
+    supported: false
+  - name: Usage of security by default for components
+    supported: false
+  - name: WAF baseline
+    supported: false
+  - name: Centralized application logging
+    supported: false
+  - name: Advanced availability and stability metrics
+    supported: false
+  - name: Audit of system events
+    supported: false
+  - name: Deactivation of unused metrics
+    supported: false
+  - name: Grouping of metrics
+    supported: false
+  - name: Targeted alerting
+    supported: false
+  - name: Security integration tests for important components
+    supported: false
+  - name: Simple visualization of defects
+    supported: true
+    module: l3_4_defect_visualization
+  - name: Generation of Patch Management Statistics
+    supported: true
+    module: l3_5_patch_management_stats
+  - name: Generation of Response Statistics
+    supported: false
+  - name: Integration of vulnerability issues into the development process
+    supported: false
+  - name: Treatment of defects with severity middle
+    supported: true
+    module: l3_6_treatment_of_defects_middle
+  - name: Usage of a vulnerability management system
+    supported: true
+    module: l3_7_vulnerability_management
+  - name: Coverage of hidden endpoints
+    supported: false
+  - name: Coverage of more input vectors
+    supported: false
+  - name: Coverage of sequential operations
+    supported: false
+  - name: Test for unauthorized installation
+    supported: false
+  - name: Weak password test
+    supported: false
+  - name: Local development security checks performed
+    supported: false
+  - name: Software Composition Analysis (client side)
+    supported: true
+    module: l3_8_client_side_sca
+  - name: Static analysis for important client side components
+    supported: true
+    module: l3_9_sast_clientside_components
+  - name: Static analysis for important server side components
+    supported: true
+    module: l3_10_sast_serverside_components
+  - name: Test for Patch Deployment Time
+    supported: false
+  - name: Analyze logs
+    supported: false
+  - name: Test for malware
+    supported: false
+  - name: Test for new image version
+    supported: false
+  - name: Deactivating of unneeded tests
+    supported: false
+LEVEL4:
+  - name: Same artifact for environments
+    supported: false
+  - name: Usage of feature toggles
+    supported: false
+  - name: Usage of a short maximum lifetime for images
+    supported: false
+  - name: Conduction of advanced threat modeling
+    supported: false
+  - name: Aligning security in teams
+    supported: false
+  - name: Conduction of collaborative team security checks
+    supported: false
+  - name: Conduction of war games
+    supported: false
+  - name: Regular security training for externals
+    supported: false
+  - name: App. Hardening Level 2
+    supported: false
+  - name: .gitignore
+    supported: true
+    module: l4_1_gitignore
+  - name: Hardening of the Environment
+    supported: false
+  - name: Production near environments are used by developers
+    supported: false
+  - name: Usage of a chaos monkey
+    supported: false
+  - name: WAF medium
+    supported: false
+  - name: Advanced app. metrics
+    supported: false
+  - name: Coverage and control metrics
+    supported: false
+  - name: Defense metrics
+    supported: false
+  - name: Screens with metric visualization
+    supported: false
+  - name: Smoke Test
+    supported: false
+  - name: Advanced visualization of defects
+    supported: true
+    module: l4_2_advanced_defect_visualization
+  - name: Reproducible defect tickets
+    supported: true
+    module: l4_3_reproducible_defects
+  - name: Usage of multiple scanners
+    supported: false
+  - name: Load tests
+    supported: false
+  - name: Static analysis for all self written components
+    supported: true
+    module: l4_4_sast_self_components
+  - name: Usage of multiple analyzers
+    supported: true
+    module: l4_5_multiple_analyzers
+  - name: Correlate known vulnerabilities in infrastructure with new image versions
+    supported: true
+    module: l4_6_correlate_cve_images
+  - name: Test for known vulnerabilities
+    supported: true
+    module: l4_7_test_known_cves
+  - name: Test of infrastructure components for known vulnerabilities
+    supported: true
+    module: l4_8_test_infra_known_cves
+  - name: Creation and application of a testing concept
+    supported: false
+LEVEL5:
+  - name: Signing of artifacts
+    supported: true
+    module: l5_1_artifact_sigining
+  - name: Blue/Green Deployment
+    supported: false
+  - name: Creation of advanced abuse stories
+    supported: false
+  - name: Conduction of collaborative security checks with devs and system admins
+    supported: false
+  - name: App. Hardening Level 3
+    supported: false
+  - name: Local development linting & style checks performed
+    supported: false
+  - name: Microservice-architecture
+    supported: false
+  - name: WAF Advanced
+    supported: false
+  - name: Correlation of security events
+    supported: false
+  - name: PII logging concept
+    supported: false
+  - name: Metrics are combined with tests
+    supported: false
+  - name: High coverage of security related module and integration tests
+    supported: false
+  - name: Treatment of all defects
+    supported: true
+    module: l5_2_treatment_of_defects_all
+  - name: Coverage analysis
+    supported: false
+  - name: Coverage of service to service communication
+    supported: false
+  - name: Test for unused Resources
+    supported: false
+  - name: Dead code elimination
+    supported: false
+  - name: Exclusion of source code duplicates
+    supported: false
+  - name: Static analysis for all components/libraries
+    supported: true
+    module: l5_3_sast_all
+  - name: Stylistic analysis
+    supported: false
