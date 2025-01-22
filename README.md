@@ -30,6 +30,12 @@ Key features of this baseline framework:
 
 ## Supported Checks
 
+> [!NOTE]
+> Some DSOMM checks cannot be automated, and are therefore not supported, \
+> due to the nature of the check, such as needing to conduct interviews.
+> 
+> Checks may be updated as the available GitHub APIs are updated.
+
 <details>
 <summary>Supported Checks For Each DSOMM Level</summary>
 
@@ -144,7 +150,7 @@ To add support for new DSOMM checks:
 It will be prompted with set of DSOMM Levels and Checks to choose to run for a given repo(s)
 1. **Select checks**:
 
-   You will be presented with a list of available checks grouped as per owasp dsomm levels.
+   You will be presented with a list of available checks grouped as per OWASP DSOMM levels.
 
    Enter the levels (Level1, Level2 etc.,) or specific check numbers or type 'ALL' to run all checks
 
