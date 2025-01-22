@@ -26,7 +26,7 @@ Key features of this baseline framework:
 * Python 3.7+
 * PyYAML
 * tabulate
-* gh cli authenticated with write/admin permissions to fetch data
+* gh cli authenticated with write/admin permissions to query the repo data
 
 ## Supported Checks
 
@@ -173,7 +173,7 @@ It will be prompted with set of DSOMM Levels and Checks to choose to run for a g
 
 
 ```
-~/devsecops-maturity-model-baseline ‹main*› » python3 main.py
+~/dsomm-baseline ‹main*› » python3 main.py
 Show all checks in menu (including not supported)?, default is N (y/N): Y
 Available checks:
 
@@ -373,7 +373,7 @@ Results have been saved to ./dsomm-test-repo.csv
 <summary>Example run to list only supported checks at the input and share all the checks results in tabular format</summary>
 
 ```
-~/devsecops-maturity-model-baseline ‹main*› » python3 main.py
+~/dsomm-baseline ‹main*› » python3 main.py
 Show all checks in menu (including not supported)?, default is N (y/N): N
 Available checks:
 
