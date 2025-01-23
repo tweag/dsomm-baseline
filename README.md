@@ -9,7 +9,7 @@ The [OWASP DevSecOps Maturity Model (DSOMM)](https://owasp.org/www-project-devse
 * Five maturity levels for each dimension, allowing organizations to assess and improve their security practices incrementally.
 * A flexible, iterative approach that aligns well with agile development practices.
 
-This python framewrok automates security checks using the GitHub API, providing a practical implementation of [DSOMM principles](https://dsomm.owasp.org/). It helps organizations identify their current DevSecOps maturity level, set targeted improvement goals and track progress towards enhanced security integration.
+This Python framework automates security checks using the GitHub API, providing a practical implementation of [DSOMM principles](https://dsomm.owasp.org/). It helps organizations identify their current DevSecOps maturity level, set targeted improvement goals and track progress towards enhanced security integration.
 
 ![Implementation Levels](./utils/dsomm-implementation.png)
 
